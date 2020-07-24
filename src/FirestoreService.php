@@ -10,8 +10,6 @@ class FirestoreService
 
     private $db;
 
-    private $collection;
-
     public function __construct()
     {
         $this->setDb(new FirestoreClient([
@@ -36,12 +34,27 @@ class FirestoreService
         $this->db = $db;
     }
 
-    public function getData($collection, $document)
+    public function getDocuments($collection, $conditions = [])
+    {
+        $ref = $this->getDb()->collection($collection);
+
+        if (!empty($conditions)) {
+            foreach ($conditions as $condition) {
+                list($field, $operator, $value) = $condition;
+
+                $ref = $ref->where($field, $operator, $value);
+            }
+        }
+
+        return $ref->documents();
+    }
+
+    public function getDocument($collection, $document)
     {
         return $this->getDb()->collection($collection)->document($document)->snapshot()->data();
     }
 
-    public function insert($collection, $document, $data = [])
+    public function setData($collection, $document, $data = [])
     {
         $docRef = $this->getDb()->collection($collection)->document($document);
 
