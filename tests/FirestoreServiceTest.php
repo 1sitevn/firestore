@@ -71,8 +71,8 @@ class FirestoreServiceTest extends TestCase
      */
     public function testSetData()
     {
-        $this->service->setData('cities', 'DN', [
-            'name' => 'TP. Da Nang'
+        $this->service->setData('cities', 'HN', [
+            'name' => 'TP. Ha noi'
         ]);
 
         $this->assertTrue(true);

@@ -51,7 +51,7 @@
         console.log("Error getting document:", error);
     });*/
 
-    db.collection("cities").where("name", "==", 'Ha noi').get()
+    /*db.collection("cities").where("name", "==", 'Ha noi').get()
         .then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 console.log(doc.id, " => ", doc.data());
@@ -59,7 +59,14 @@
         }).catch(function (error) {
             console.log("Error getting documents: ", error);
         }
-    );
+    );*/
+
+    db.collection("cities").doc("HN")
+        .onSnapshot(function (doc) {
+            var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+            
+            console.log(source, " data: ", doc.data());
+        });
 </script>
 </body>
 </html>
